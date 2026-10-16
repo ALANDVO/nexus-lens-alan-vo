@@ -1,0 +1,56 @@
+# Nexus Lens — local development compose stack.
+#
+#   docker compose up --profile demo
+#
+# Auth (Keycloak SSO) is wired but not yet enforced by the API in this
+# checkpoint.  See README "SSO / SAML setup".
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      APP_ENV: development
+      APP_HOST: 0.0.0.0
+      DATABASE_URL: sqlite:////app/data/nexus_lens.db
+    volumes:
+      - nexus-lens-data:/app/data
+    depends_on:
+      keycloak:
+        condition: service_started
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    ports:
+      - "127.0.0.1:5173:8080"
+    depends_on:
+      - backend
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.0.4
+    command: start-dev --import-realm
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin-please-change
+    ports:
+      - "127.0.0.1:8081:8080"
+    volumes:
+      - nexus-lens-keycloak:/opt/keycloak/data
+      - ./backend/app/core/auth/keycloak/real.json:/opt/keycloak/data/import/real.json:ro
+    profiles: ["demo", "auth"]
+
+  # Local demo profile — binds localhost only.
+  #   docker compose --profile demo up
+  #
+  # When APP_ENV=demo the app refuses to start unless bound to 127.0.0.1.
+  # Use the same backend image with demo overrides:
+  #   docker compose --profile demo up backend frontend
+
+volumes:
+  nexus-lens-data:
+  nexus-lens-keycloak:

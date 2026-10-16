@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "name": "nexus-lens-alan-vo",
+  "owner": "ALANDVO",
+  "email": "alanvo@gmail.com",
+  "domain": "AI/ML developer tools",
+  "summary": "Work in progress: nexus-lens-alan-vo",
+  "workflows": [
+    "Register a plugin with its manifest and run deterministic conformance analysis to get a quality score and structured findings",
+    "Browse registered plugins with their latest analysis scores on a responsive dashboard",
+    "Export a plugin analysis report as JSON for review or archival"
+  ],
+  "auth": "oidc-keycloak-saml-broker",
+  "llm_providers": [
+    "openai-compatible",
+    "anthropic",
+    "gemini",
+    "ollama"
+  ],
+  "status": "work-in-progress"
+}

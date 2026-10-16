@@ -1,0 +1,1 @@
+{"name":"rust-analyzer-lsp","description":"Rust language server (rust-analyzer) for Claude Code. Provides go-to-definition, hover, and diagnostics for .rs files.","source":"anthropics/claude-plugins-official","plugin_type":"lsp","config":{"lspServers":{"rust":{"command":"rust-analyzer","args":["--stdio"]}}}}

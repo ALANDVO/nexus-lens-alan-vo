@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "current_feature": "export-workflow",
+  "features": [
+    {
+      "id": "conformance-engine",
+      "title": "Plugin conformance analysis engine",
+      "status": "done",
+      "acceptance": [
+        "Register a plugin with manifest data (name, description, source, plugin config)",
+        "Run deterministic conformance analysis producing findings and a 0-100 quality score",
+        "View findings grouped by severity with evidence for each",
+        "Persist plugins and analyses to SQLite; retrieve via typed API",
+        "CLI command reproduces an analysis run on a sample manifest"
+      ],
+      "implementation": [
+        "backend/app/services/conformance.py",
+        "backend/app/core/security.py",
+        "backend/app/api/plugins.py",
+        "backend/app/api/analysis.py"
+      ],
+      "tests": [
+        "backend/tests/test_conformance.py",
+        "backend/tests/test_api_plugins.py",
+        "backend/tests/test_api_analysis.py",
+        "backend/tests/test_persistence.py"
+      ]
+    },
+    {
+      "id": "plugin-registry",
+      "title": "Plugin registry UI + search, filter, pagination",
+      "status": "done",
+      "acceptance": [
+        "React dashboard listing plugins with quality scores",
+        "Search and filter plugins by name/type/score",
+        "Plugin detail view with analysis findings"
+      ],
+      "implementation": [],
+      "tests": []
+    },
+    {
+      "id": "export-workflow",
+      "title": "Analysis export workflow",
+      "status": "planned",
+      "acceptance": [
+        "Export a plugin or analysis report as JSON for review"
+      ],
+      "implementation": [],
+      "tests": []
+    },
+    {
+      "id": "auth-oidc",
+      "title": "OIDC Keycloak SSO authentication & authorization",
+      "status": "planned",
+      "acceptance": [
+        "OIDC login callback",
+        "role-based authorization on data endpoints",
+        "logout"
+      ],
+      "implementation": [],
+      "tests": []
+    },
+    {
+      "id": "llm-advisory",
+      "title": "Opt-in LLM advisory explanations of findings",
+      "status": "planned",
+      "acceptance": [
+        "LLM explanation endpoint, clearly labeled advisory, redacted errors"
+      ],
+      "implementation": [],
+      "tests": []
+    }
+  ]
+}

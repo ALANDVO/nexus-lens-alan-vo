@@ -90,3 +90,73 @@ def test_analysis_updates_plugin_latest_score(client):
     plugin = resp3.json()
     assert plugin["latest_score"] == score
     assert plugin["latest_band"] == band
+
+def test_export_analysis_report(client):
+    """Test exporting an analysis report as JSON."""
+    payload = plugin_create_payload(LSP_MISSING_CONFIG)
+    resp = client.post("/api/v1/plugins", json=payload)
+    plugin_id = resp.json()["id"]
+
+    resp2 = client.post(f"/api/v1/plugins/{plugin_id}/analyze")
+    analysis_id = resp2.json()["id"]
+
+    resp3 = client.get(f"/api/v1/plugins/analyses/{analysis_id}/export")
+    assert resp3.status_code == 200
+    assert resp3.headers["content-type"] == "application/json"
+    assert "attachment" in resp3.headers["content-disposition"]
+    assert f"analysis-{analysis_id}-report.json" in resp3.headers["content-disposition"]
+
+    export_data = resp3.json()
+    assert export_data["type"] == "analysis_report"
+    assert export_data["plugin"]["id"] == plugin_id
+    assert export_data["analysis"]["id"] == analysis_id
+    assert "findings" in export_data["analysis"]
+    assert export_data["analysis"]["score"] == resp2.json()["score"]
+    assert export_data["analysis"]["band"] == resp2.json()["band"]
+
+
+def test_export_plugin_report(client):
+    """Test exporting a plugin with its latest analysis as JSON."""
+    payload = plugin_create_payload(CLEAN_MANIFEST)
+    resp = client.post("/api/v1/plugins", json=payload)
+    plugin_id = resp.json()["id"]
+
+    client.post(f"/api/v1/plugins/{plugin_id}/analyze")
+
+    resp2 = client.get(f"/api/v1/plugins/{plugin_id}/export")
+    assert resp2.status_code == 200
+    assert resp2.headers["content-type"] == "application/json"
+    assert "attachment" in resp2.headers["content-disposition"]
+    assert f"plugin-{plugin_id}-report.json" in resp2.headers["content-disposition"]
+
+    export_data = resp2.json()
+    assert export_data["type"] == "plugin_report"
+    assert export_data["plugin"]["id"] == plugin_id
+    assert export_data["latest_analysis"] is not None
+    assert export_data["latest_analysis"]["id"] is not None
+    assert "findings" in export_data["latest_analysis"]
+
+
+def test_export_plugin_without_analysis(client):
+    """Test exporting a plugin with no analyses."""
+    payload = plugin_create_payload(CLEAN_MANIFEST)
+    resp = client.post("/api/v1/plugins", json=payload)
+    plugin_id = resp.json()["id"]
+
+    resp2 = client.get(f"/api/v1/plugins/{plugin_id}/export")
+    assert resp2.status_code == 200
+    export_data = resp2.json()
+    assert export_data["type"] == "plugin_report"
+    assert export_data["latest_analysis"] is None
+
+
+def test_export_nonexistent_analysis(client):
+    """Test exporting a non-existent analysis returns 404."""
+    resp = client.get("/api/v1/plugins/analyses/99999/export")
+    assert resp.status_code == 404
+
+
+def test_export_nonexistent_plugin(client):
+    """Test exporting a non-existent plugin returns 404."""
+    resp = client.get("/api/v1/plugins/99999/export")
+    assert resp.status_code == 404

@@ -41,12 +41,16 @@
     {
       "id": "export-workflow",
       "title": "Analysis export workflow",
-      "status": "planned",
+      "status": "done",
       "acceptance": [
         "Export a plugin or analysis report as JSON for review"
       ],
-      "implementation": [],
-      "tests": []
+      "implementation": [
+        "backend/app/api/analysis.py"
+      ],
+      "tests": [
+        "backend/tests/test_api_analysis.py"
+      ]
     },
     {
       "id": "auth-oidc",

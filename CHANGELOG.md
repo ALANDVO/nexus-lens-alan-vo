@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.0 — work-in-progress checkpoint
+
+Partial code published for continued development. Known issues: STATUS.md.
+
 ## 1.0.0 — work-in-progress checkpoint
 
 Partial code published for continued development. Known issues: STATUS.md.
@@ -29,7 +33,7 @@ on [Keep a Changelog](https://keepachangelog.com/) and the version follows
 **Frontend (React + TypeScript + Vite)**
 - Responsive dashboard listing plugins with quality-score badges
 - Plugin registration form with real-time validation and manifest auto-generation
-- Plugin detail page with “Run Analysis” workflow and findings view
+- Plugin detail page with "Run Analysis" workflow and findings view
 - Analysis history with per-item drill-in
 - Typed API client (`src/api/client.ts`) derived from actual backend routes
 - Loading, error, and empty states throughout
@@ -48,9 +52,17 @@ on [Keep a Changelog](https://keepachangelog.com/) and the version follows
 - 27 backend tests (engine, API, persistence, audit)
 - 11 frontend tests (client, components, pages)
 
+### Added — 2026-10-26 (export-workflow checkpoint)
+
+**Backend (FastAPI)**
+- JSON export endpoints for analysis reports and plugin reports
+  - `GET /api/v1/plugins/{plugin_id}/export` — exports plugin with latest analysis
+  - `GET /api/v1/plugins/analyses/{analysis_id}/export` — exports full analysis report
+  - Both return `application/json` with `Content-Disposition: attachment` for download
+- 5 new tests covering export functionality and 404 error cases
+
 ### Planned (next milestones)
 
 - OIDC Keycloak SSO login (state + nonce + PKCE) with role-based authorization
 - Opt-in LLM advisory explanations of findings (OpenAI/Anthropic/Gemini/Ollama adapters)
-- JSON export workflow for analyses
 - Advanced search and filtering UI

@@ -34,10 +34,14 @@ Acceptance:
 
 ### export-workflow — Analysis export workflow
 
-Status: planned
+Status: done
 
 Acceptance:
 - Export a plugin or analysis report as JSON for review
+
+Implementation: `backend/app/api/analysis.py`
+
+Tests: `backend/tests/test_api_analysis.py`
 
 ### auth-oidc — OIDC Keycloak SSO authentication & authorization
 

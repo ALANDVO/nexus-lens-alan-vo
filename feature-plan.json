@@ -43,10 +43,14 @@
       "title": "Analysis export workflow",
       "status": "done",
       "acceptance": [
-        "Export a plugin or analysis report as JSON for review"
+        "Export a plugin or analysis report as JSON for review",
+        "Frontend: \"Export Plugin Report\" button on plugin detail page",
+        "Frontend: \"Export\" button for each analysis in the past analyses list"
       ],
       "implementation": [
-        "backend/app/api/analysis.py"
+        "backend/app/api/analysis.py",
+        "frontend/src/api/client.ts",
+        "frontend/src/pages/PluginDetailPage.tsx"
       ],
       "tests": [
         "backend/tests/test_api_analysis.py"

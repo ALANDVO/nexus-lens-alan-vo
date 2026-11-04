@@ -91,6 +91,20 @@ export const api = {
     return request<AnalysisSummary[]>(`/plugins/${pluginId}/analyses`);
   },
 
+  exportAnalysis(analysisId: number): Promise<Blob> {
+    return fetch(`${API_BASE}/plugins/analyses/${analysisId}/export`).then((resp) => {
+      if (!resp.ok) throw new ApiError("Export failed", resp.status);
+      return resp.blob();
+    });
+  },
+
+  exportPlugin(pluginId: number): Promise<Blob> {
+    return fetch(`${API_BASE}/plugins/${pluginId}/export`).then((resp) => {
+      if (!resp.ok) throw new ApiError("Export failed", resp.status);
+      return resp.blob();
+    });
+  },
+
   // --- Health ---
   health(): Promise<{ status: string; time: string }> {
     return request<{ status: string; time: string }>("/health");

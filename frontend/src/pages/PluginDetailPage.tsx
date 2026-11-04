@@ -57,6 +57,37 @@ export default function PluginDetailPage({ id, onBack }: Props) {
     }
   };
 
+  const exportAnalysis = async (analysisId: number) => {
+    try {
+      const blob = await api.exportAnalysis(analysisId);
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `analysis-${analysisId}-report.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("Export failed:", err);
+      alert("Failed to export analysis");
+    }
+  };
+
+  const exportPlugin = async () => {
+    if (!plugin) return;
+    try {
+      const blob = await api.exportPlugin(plugin.id);
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `plugin-${plugin.id}-report.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("Export failed:", err);
+      alert("Failed to export plugin");
+    }
+  };
+
   if (loading) {
     return (
       <div className="container">
@@ -84,9 +115,13 @@ export default function PluginDetailPage({ id, onBack }: Props) {
           <h1>{plugin.name}</h1>
           <p className="subtitle">{plugin.description}</p>
         </div>
-        <button className="btn" onClick={onBack}>← Dashboard</button>
+        <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+          <button className="btn btn-secondary" onClick={exportPlugin}>
+            Export Plugin Report
+          </button>
+          <button className="btn" onClick={onBack}>← Dashboard</button>
+        </div>
       </div>
-
       <div className="card">
         <table className="table" style={{ width: "auto" }}>
           <tbody>
@@ -126,13 +161,22 @@ export default function PluginDetailPage({ id, onBack }: Props) {
                   <span style={{ fontSize: "0.8rem", color: "var(--text-dim)" }}>
                     {new Date(a.created_at).toLocaleString()}
                   </span>
-                  <button
-                    className="btn"
-                    style={{ marginLeft: "auto", fontSize: "0.75rem", padding: "4px 10px" }}
-                    onClick={() => viewAnalysis(a.id)}
-                  >
-                    View
-                  </button>
+                  <div style={{ display: "flex", gap: "4px", marginLeft: "auto" }}>
+                    <button
+                      className="btn"
+                      style={{ fontSize: "0.75rem", padding: "4px 10px" }}
+                      onClick={() => viewAnalysis(a.id)}
+                    >
+                      View
+                    </button>
+                    <button
+                      className="btn btn-secondary"
+                      style={{ fontSize: "0.75rem", padding: "4px 10px" }}
+                      onClick={() => exportAnalysis(a.id)}
+                    >
+                      Export
+                    </button>
+                  </div>
                 </div>
               </li>
             ))}

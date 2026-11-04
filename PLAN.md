@@ -38,8 +38,10 @@ Status: done
 
 Acceptance:
 - Export a plugin or analysis report as JSON for review
+- Frontend: "Export Plugin Report" button on plugin detail page
+- Frontend: "Export" button for each analysis in the past analyses list
 
-Implementation: `backend/app/api/analysis.py`
+Implementation: `backend/app/api/analysis.py`, `frontend/src/api/client.ts`, `frontend/src/pages/PluginDetailPage.tsx`
 
 Tests: `backend/tests/test_api_analysis.py`
 

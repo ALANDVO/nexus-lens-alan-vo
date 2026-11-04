@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.0 — work-in-progress checkpoint
+
+Partial code published for continued development. Known issues: STATUS.md.
+
 ## 1.1.0 — work-in-progress checkpoint
 
 Partial code published for continued development. Known issues: STATUS.md.
@@ -61,8 +65,12 @@ on [Keep a Changelog](https://keepachangelog.com/) and the version follows
   - Both return `application/json` with `Content-Disposition: attachment` for download
 - 5 new tests covering export functionality and 404 error cases
 
-### Planned (next milestones)
+### Added — 2026-11-04 (export-workflow UI checkpoint)
 
-- OIDC Keycloak SSO login (state + nonce + PKCE) with role-based authorization
-- Opt-in LLM advisory explanations of findings (OpenAI/Anthropic/Gemini/Ollama adapters)
-- Advanced search and filtering UI
+**Frontend (React + TypeScript)**
+- "Export Plugin Report" button on plugin detail page — downloads plugin manifest with latest analysis
+- "Export" button for each past analysis — downloads individual analysis report
+- API client methods `exportAnalysis(analysisId)` and `exportPlugin(pluginId)` returning Blob for browser download
+- TypeScript typecheck and all 11 frontend tests pass
+
+### Planned (next milestones)

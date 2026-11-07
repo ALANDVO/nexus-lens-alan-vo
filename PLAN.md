@@ -76,3 +76,6 @@ Status: planned
 Acceptance:
 - LLM explanation endpoint, clearly labeled advisory, redacted errors
 
+---
+
+Alan Vo · [alanvo.net](https://alanvo.net)

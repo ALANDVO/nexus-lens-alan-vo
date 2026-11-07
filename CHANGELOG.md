@@ -78,3 +78,7 @@ on [Keep a Changelog](https://keepachangelog.com/) and the version follows
 - TypeScript typecheck and all 11 frontend tests pass
 
 ### Planned (next milestones)
+
+---
+
+Alan Vo · [alanvo.net](https://alanvo.net)

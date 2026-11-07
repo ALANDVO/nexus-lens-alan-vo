@@ -112,3 +112,7 @@ List all analyses for a plugin (summaries, no findings body).
    "checks_run": [...], "created_at": "2026-10-16T12:00:00"}
 ]
 ```
+
+---
+
+Alan Vo · [alanvo.net](https://alanvo.net)

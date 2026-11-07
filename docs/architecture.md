@@ -65,3 +65,7 @@ relationships use `selectinload` for eager loading.
 - **Compose**: backend + frontend + Keycloak, ports bound to `127.0.0.1`.
 - **Auth**: OIDC through Keycloak (planned), SAML via identity brokering.
 - **Demo mode**: `APP_ENV=demo` refuses to start unless bound to localhost.
+
+---
+
+Alan Vo · [alanvo.net](https://alanvo.net)

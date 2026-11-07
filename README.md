@@ -261,3 +261,7 @@ read-only).
 ## License
 
 MIT © Alan Vo <alanvo@gmail.com>
+
+---
+
+Alan Vo · [alanvo.net](https://alanvo.net)

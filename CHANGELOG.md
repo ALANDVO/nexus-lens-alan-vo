@@ -81,4 +81,4 @@ on [Keep a Changelog](https://keepachangelog.com/) and the version follows
 
 ---
 
-Alan Vo · [alanvo.net](https://alanvo.net)
+Alan Vo · [alanvo.net](https://alanvo.net) · [X: @alanvoasi](https://x.com/alanvoasi)

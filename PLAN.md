@@ -45,6 +45,21 @@ Implementation: `backend/app/api/analysis.py`, `frontend/src/api/client.ts`, `fr
 
 Tests: `backend/tests/test_api_analysis.py`
 
+### type-consistency — Enhanced plugin type consistency checks
+
+Status: done
+
+Acceptance:
+- MCP plugin type requires mcpServers in config (WARN if missing)
+- LSP plugin type requires lspServers in config (WARN if missing) - existing
+- Reverse check: lspServers declared but plugin_type is not 'lsp' -> WARN
+- Reverse check: mcpServers declared but plugin_type is not 'mcp' -> WARN
+- Fully conformant MCP manifest with mcpServers scores 100
+
+Implementation: `backend/app/services/conformance.py`, `backend/tests/test_conformance.py`
+
+Tests: `backend/tests/test_conformance.py`
+
 ### auth-oidc — OIDC Keycloak SSO authentication & authorization
 
 Status: planned

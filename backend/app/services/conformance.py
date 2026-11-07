@@ -187,21 +187,66 @@ def check_description_quality(manifest: dict[str, Any]) -> list[Finding]:
 
 
 def check_type_consistency(manifest: dict[str, Any]) -> list[Finding]:
-    """If ``plugin_type`` is 'lsp', the config should declare ``lspServers``."""
+    """Validate plugin_type matches declared server configurations.
+
+    - If ``plugin_type`` is 'lsp', config should declare ``lspServers``.
+    - If ``plugin_type`` is 'mcp', config should declare ``mcpServers``.
+    - If ``lspServers`` is declared but ``plugin_type`` is not 'lsp', warn.
+    - If ``mcpServers`` is declared but ``plugin_type`` is not 'mcp', warn.
+    """
     ptype = manifest.get("plugin_type", "other")
     config = manifest.get("config", {})
     if not isinstance(config, dict):
         return []
-    if ptype == "lsp" and not config.get("lspServers"):
-        return [
+
+    findings: list[Finding] = []
+    has_lsp = bool(config.get("lspServers"))
+    has_mcp = bool(config.get("mcpServers"))
+
+    # LSP type should have lspServers
+    if ptype == "lsp" and not has_lsp:
+        findings.append(
             Finding(
                 "plugin.type_consistency",
                 Severity.WARN,
                 "Plugin type is 'lsp' but no lspServers declared in config.",
                 {"plugin_type": ptype, "has_lspServers": False},
             )
-        ]
-    return []
+        )
+
+    # MCP type should have mcpServers
+    if ptype == "mcp" and not has_mcp:
+        findings.append(
+            Finding(
+                "plugin.type_consistency",
+                Severity.WARN,
+                "Plugin type is 'mcp' but no mcpServers declared in config.",
+                {"plugin_type": ptype, "has_mcpServers": False},
+            )
+        )
+
+    # Reverse: servers declared but type doesn't match
+    if has_lsp and ptype != "lsp":
+        findings.append(
+            Finding(
+                "plugin.type_consistency",
+                Severity.WARN,
+                "Config declares lspServers but plugin_type is not 'lsp'.",
+                {"plugin_type": ptype, "has_lspServers": True},
+            )
+        )
+
+    if has_mcp and ptype != "mcp":
+        findings.append(
+            Finding(
+                "plugin.type_consistency",
+                Severity.WARN,
+                "Config declares mcpServers but plugin_type is not 'mcp'.",
+                {"plugin_type": ptype, "has_mcpServers": True},
+            )
+        )
+
+    return findings
 
 
 def check_token_scan(manifest: dict[str, Any]) -> list[Finding]:

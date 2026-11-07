@@ -57,6 +57,25 @@
       ]
     },
     {
+      "id": "type-consistency",
+      "title": "Enhanced plugin type consistency checks",
+      "status": "done",
+      "acceptance": [
+        "MCP plugin type requires mcpServers in config (WARN if missing)",
+        "LSP plugin type requires lspServers in config (WARN if missing) - existing",
+        "Reverse check: lspServers declared but plugin_type is not 'lsp' -> WARN",
+        "Reverse check: mcpServers declared but plugin_type is not 'mcp' -> WARN",
+        "Fully conformant MCP manifest with mcpServers scores 100"
+      ],
+      "implementation": [
+        "backend/app/services/conformance.py",
+        "backend/tests/test_conformance.py"
+      ],
+      "tests": [
+        "backend/tests/test_conformance.py"
+      ]
+    },
+    {
       "id": "auth-oidc",
       "title": "OIDC Keycloak SSO authentication & authorization",
       "status": "planned",

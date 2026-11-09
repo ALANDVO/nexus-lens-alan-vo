@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.0 — work-in-progress checkpoint
+
+Partial code published for continued development. Known issues: STATUS.md.
+
 ## 1.3.0 — work-in-progress checkpoint
 
 Partial code published for continued development. Known issues: STATUS.md.
@@ -76,6 +80,13 @@ on [Keep a Changelog](https://keepachangelog.com/) and the version follows
 - "Export" button for each past analysis — downloads individual analysis report
 - API client methods `exportAnalysis(analysisId)` and `exportPlugin(pluginId)` returning Blob for browser download
 - TypeScript typecheck and all 11 frontend tests pass
+### Added — 2026-11-09 (CLI test coverage checkpoint)
+
+**Backend (FastAPI + pytest)**
+- Added `test_cli.py` with 8 tests covering the `analyze-manifest` CLI command
+- Tests verify: clean manifest scoring, LSP missing config warning, token scan detection, file not found, invalid JSON, non-object JSON, help output, and no-args error handling
+- All 45 backend tests pass (37 original + 8 new CLI tests)
+- All 11 frontend tests pass
 
 ### Planned (next milestones)
 

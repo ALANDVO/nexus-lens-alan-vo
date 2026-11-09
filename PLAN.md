@@ -21,7 +21,7 @@ Acceptance:
 
 Implementation: `backend/app/services/conformance.py`, `backend/app/core/security.py`, `backend/app/api/plugins.py`, `backend/app/api/analysis.py`
 
-Tests: `backend/tests/test_conformance.py`, `backend/tests/test_api_plugins.py`, `backend/tests/test_api_analysis.py`, `backend/tests/test_persistence.py`
+Tests: `backend/tests/test_conformance.py`, `backend/tests/test_api_plugins.py`, `backend/tests/test_api_analysis.py`, `backend/tests/test_persistence.py`, `backend/tests/test_cli.py`
 
 ### plugin-registry — Plugin registry UI + search, filter, pagination
 

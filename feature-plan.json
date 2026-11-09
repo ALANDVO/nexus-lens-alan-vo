@@ -23,7 +23,8 @@
         "backend/tests/test_conformance.py",
         "backend/tests/test_api_plugins.py",
         "backend/tests/test_api_analysis.py",
-        "backend/tests/test_persistence.py"
+        "backend/tests/test_persistence.py",
+        "backend/tests/test_cli.py"
       ]
     },
     {

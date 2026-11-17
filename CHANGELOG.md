@@ -1,6 +1,21 @@
 # Changelog
 
+## 1.5.0 — work-in-progress checkpoint
+
+Partial code published for continued development. Known issues: STATUS.md.
+
+## 1.4.1 — work-in-progress checkpoint
+
+### Added
+- OIDC Keycloak SSO authentication flow (login, callback, logout, me endpoint)
+
+### Planned
+- role-based authorization on data endpoints using Keycloak realms
+- logout endpoint completion
+
 ## 1.4.0 — work-in-progress checkpoint
+
+Partial code published for continued development. Known issues: STATUS.md.
 
 Partial code published for continued development. Known issues: STATUS.md.
 

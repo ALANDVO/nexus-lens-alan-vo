@@ -9,11 +9,13 @@ from __future__ import annotations
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
+from starlette.middleware.sessions import SessionMiddleware
 
 from .core.config import settings
 from .core.database import init_db
 from .api import api_router
 from .api.health import router as health_router
+from .api.auth import router as auth_router  # OIDC Keycloak SSO
 
 _origins = [
     "http://127.0.0.1:5173",
@@ -57,12 +59,20 @@ def create_app() -> FastAPI:
         allow_headers=["*"],
     )
 
+    # OIDC session middleware - enables cookie-based sessions for auth
+    app.add_middleware(
+        SessionMiddleware,
+        secret_key="nexus-lens-session-secret-key",
+        session_cookie="nexus_lens_session",
+    )
+
     # Root → API docs (dev convenience).
     @app.get("/")
     def root():
         return RedirectResponse(url="/docs")
     app.include_router(health_router)
 
+    app.include_router(auth_router)
     app.include_router(api_router)
     return app
 

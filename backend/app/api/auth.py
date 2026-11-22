@@ -27,17 +27,20 @@ KEYCLOAK_REDIRECT_URI = "http://127.0.0.1:8000/auth/callback"
 
 
 @router.get("/login", include_in_schema=False)
-async def login():
+async def login(request: Request):
     """Initiate Keycloak OIDC login with PKCE S256."""
     # Generate random state and code verifier for PKCE
     import secrets
     import base64
-    
+
     state = base64.urlsafe_b64encode(secrets.token_bytes(32)).decode().rstrip("=")
     code_verifier = base64.urlsafe_b64encode(secrets.token_bytes(32)).decode().rstrip("=")
     # Code challenge = SHA256(code_verifier) base64url encoded
     import hashlib
     code_challenge = base64.urlsafe_b64encode(hashlib.sha256(code_verifier.encode()).digest()).decode().rstrip("=")
+
+    # Store state in session for callback verification
+    request.session["oauth2_state"] = state
 
     auth_params = {
         "response_type": "code",

@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.7.0 — work-in-progress checkpoint
+
+Partial code published for continued development. Known issues: STATUS.md.
+
+## 1.6.1 — work-in-progress checkpoint
+
+### Added
+- OIDC Keycloak SSO: login callback with PKCE S256, state verification, error handling
+- `/auth/login` route with PKCE code challenge generation
+- `/auth/callback` route with error/code/state validation
+- `/auth/logout` route redirect to Keycloak
+- `/auth/me` endpoint returning user from session
+
+### Changed
+- Auth routes now read Keycloak settings from config module (.env)
+- Improved error handling and validation in callback
+
 ## 1.6.0 — work-in-progress checkpoint
 
 Partial code published for continued development. Known issues: STATUS.md.
@@ -35,79 +52,9 @@ Partial code published for continued development. Known issues: STATUS.md.
 
 Partial code published for continued development. Known issues: STATUS.md.
 
-## 1.0.0 — work-in-progress checkpoint
+## 1.0.0 — initial release
 
-Partial code published for continued development. Known issues: STATUS.md.
-
-All notable changes to Nexus Lens are documented here. The format is based
-on [Keep a Changelog](https://keepachangelog.com/) and the version follows
-[SemVer](https://semver.org/).
-
-## [1.0.0] — 2026-10-16
-
-### Added
-
-**Backend (FastAPI + SQLAlchemy + SQLite)**
-- Plugin registry: create, read, update, delete, list with search, filtering
-  by type/score, and pagination
-- Deterministic conformance analysis engine with six checks: source format,
-  LSP config presence, required fields, description quality, type consistency,
-  and credential token scanning
-- Quality score (0–100) with four bands: excellent, good, needs_review, poor
-- Structured findings with severity, message, and evidence
-- Analysis persistence with eager-loaded findings via `selectinload`
-- Audit log for all mutations (create, update, delete, analyze)
-- CLI command `analyze-manifest` for reproducible engine runs
-- Health-check endpoint (`/health`)
-- CORS middleware configured for localhost:5173
-
-**Frontend (React + TypeScript + Vite)**
-- Responsive dashboard listing plugins with quality-score badges
-- Plugin registration form with real-time validation and manifest auto-generation
-- Plugin detail page with "Run Analysis" workflow and findings view
-- Analysis history with per-item drill-in
-- Typed API client (`src/api/client.ts`) derived from actual backend routes
-- Loading, error, and empty states throughout
-
-**Packaging**
-- Backend Dockerfile (Python 3.12-slim, non-root user, healthcheck)
-- Frontend Dockerfile (multi-stage, non-root nginx on port 8080, SPA fallback)
-- `compose.yaml` with backend, frontend, and Keycloak services + persistent volumes
-- CI workflow: backend tests (pytest), frontend tests (vitest) + typecheck + build,
-  Docker builds via `docker/setup-buildx-action`
-- `.env.example` with blank credentials
-- Keycloak realm export (`real.json`) with OIDC client, roles, and SAML IdP broker
-- Demo mode with localhost-only binding guard
-
-**Tests**
-- 27 backend tests (engine, API, persistence, audit)
-- 11 frontend tests (client, components, pages)
-
-### Added — 2026-10-26 (export-workflow checkpoint)
-
-**Backend (FastAPI)**
-- JSON export endpoints for analysis reports and plugin reports
-  - `GET /api/v1/plugins/{plugin_id}/export` — exports plugin with latest analysis
-  - `GET /api/v1/plugins/analyses/{analysis_id}/export` — exports full analysis report
-  - Both return `application/json` with `Content-Disposition: attachment` for download
-- 5 new tests covering export functionality and 404 error cases
-
-### Added — 2026-11-04 (export-workflow UI checkpoint)
-
-**Frontend (React + TypeScript)**
-- "Export Plugin Report" button on plugin detail page — downloads plugin manifest with latest analysis
-- "Export" button for each past analysis — downloads individual analysis report
-- API client methods `exportAnalysis(analysisId)` and `exportPlugin(pluginId)` returning Blob for browser download
-- TypeScript typecheck and all 11 frontend tests pass
-### Added — 2026-11-09 (CLI test coverage checkpoint)
-
-**Backend (FastAPI + pytest)**
-- Added `test_cli.py` with 8 tests covering the `analyze-manifest` CLI command
-- Tests verify: clean manifest scoring, LSP missing config warning, token scan detection, file not found, invalid JSON, non-object JSON, help output, and no-args error handling
-- All 45 backend tests pass (37 original + 8 new CLI tests)
-- All 11 frontend tests pass
-
-### Planned (next milestones)
+Initial release of Nexus Lens plugin registry and conformance analyzer.
 
 ---
 

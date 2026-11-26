@@ -13,13 +13,15 @@ from fastapi import APIRouter, Request, Response, HTTPException
 from starlette.responses import RedirectResponse
 import urllib.parse
 
+from app.core.config import settings
+
 router = APIRouter(prefix="/auth", tags=["auth"])
 
-# OIDC configuration - these would come from .env in production
-KEYCLOAK_URL = "http://keycloak:8081"
-KEYCLOAK_REALM = "nexus-lens"
-KEYCLOAK_CLIENT_ID = "nexus-lens-frontend"
-KEYCLOAK_CLIENT_SECRET = ""  # set via env in production
+# OIDC configuration - read from .env via config module
+KEYCLOAK_URL = settings.keycloak_url or "http://keycloak:8081"
+KEYCLOAK_REALM = settings.keycloak_realm or "nexus-lens"
+KEYCLOAK_CLIENT_ID = settings.keycloak_client_id or "nexus-lens-frontend"
+KEYCLOAK_CLIENT_SECRET = settings.keycloak_client_secret or ""
 KEYCLOAK_AUTH_URL = f"{KEYCLOAK_URL}/realms/{KEYCLOAK_REALM}/protocol/openid-connect/auth"
 KEYCLOAK_TOKEN_URL = f"{KEYCLOAK_URL}/realms/{KEYCLOAK_REALM}/protocol/openid-connect/token"
 KEYCLOAK_LOGOUT_URL = f"{KEYCLOAK_URL}/realms/{KEYCLOAK_REALM}/protocol/openid-connect/logout"
